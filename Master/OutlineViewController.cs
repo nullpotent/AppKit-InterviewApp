@@ -9,6 +9,22 @@ namespace MacGallery
 {
     public partial class OutlineViewController : NSViewController, INSOutlineViewDataSource, INSOutlineViewDelegate
     {
+        private NSMutableArray _contents = new NSMutableArray();
+
+        [Export("contents")]
+        public NSArray Contents
+        {
+            get => _contents;
+        }
+
+        [Export("setContentsArray:")]
+        public void SetContents(NSMutableArray array)
+        {
+            WillChangeValue("contents");
+            _contents = array;
+            DidChangeValue("contents");
+        }
+
         InitialViewController? initialViewController;
 
         public NSViewController? ViewControllerForSelection(NSTreeNode[]? selection)
@@ -28,12 +44,9 @@ namespace MacGallery
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
             initialViewController = Storyboard!.InstantiateControllerWithIdentifier(nameof(InitialViewController)) as InitialViewController;
         }
 
-        public OutlineViewController(IntPtr handle) : base(handle)
-        {
-        }
+        public OutlineViewController(IntPtr handle) : base(handle) { }
     }
 }

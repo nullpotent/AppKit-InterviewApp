@@ -79,6 +79,8 @@
     <Folder Include="Master\" />
     <Folder Include="Detail\" />
     <Folder Include="MainWindow\" />
+    <Folder Include="Master\Views\" />
+    <Folder Include="Detail\Views\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -88,10 +90,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="InitialViewController.cs" />
-    <Compile Include="InitialViewController.designer.cs">
-      <DependentUpon>InitialViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="FileNode.cs" />
     <Compile Include="Extensions\FileNodeExtensions.cs" />
     <Compile Include="Extensions\NSUrlExtensions.cs" />
@@ -116,9 +114,21 @@
     <Compile Include="Master\OutlineViewController.designer.cs">
       <DependentUpon>OutlineViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="SeparatorView.cs" />
-    <Compile Include="SeparatorView.designer.cs">
+    <Compile Include="Master\Views\SeparatorView.cs" />
+    <Compile Include="Master\Views\SeparatorView.designer.cs">
       <DependentUpon>SeparatorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Views\OutlineView.cs" />
+    <Compile Include="Master\Views\OutlineView.designer.cs">
+      <DependentUpon>OutlineView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Detail\Views\DetailViewContainer.cs" />
+    <Compile Include="Detail\Views\DetailViewContainer.designer.cs">
+      <DependentUpon>DetailViewContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Detail\InitialViewController.cs" />
+    <Compile Include="Detail\InitialViewController.designer.cs">
+      <DependentUpon>InitialViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

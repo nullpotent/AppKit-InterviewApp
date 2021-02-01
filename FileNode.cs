@@ -3,6 +3,7 @@ using System;
 using Foundation;
 using MacGallery.Extensions;
 using System.Diagnostics;
+using AppKit;
 
 namespace MacGallery
 {
@@ -13,14 +14,87 @@ namespace MacGallery
         Image,
     }
 
-    internal class FileNode
+    [Register("FileNode")]
+    internal class FileNode : NSObject
     {
-        public NodeType FileType { get; private set; } = NodeType.Unknown;
-        public string Url { get; private set; } = string.Empty;
-        public string Title { get; private set; } = string.Empty;
-        public List<FileNode> Children { get; private set; } = new();
+        private NSMutableArray _children = new NSMutableArray();
+        private NodeType _fileType = NodeType.Unknown;
+        private string _url = string.Empty;
+        private string _title = string.Empty;
 
-        private FileNode() { }
+        [Export("fileType")]
+        public NodeType FileType
+        {
+            get
+            {
+                return _fileType;
+            }
+            set
+            {
+                WillChangeValue(nameof(FileType));
+                _fileType = value;
+                DidChangeValue(nameof(FileType));
+            }
+        }
+
+        [Export("url")]
+        public string Url
+        {
+            get
+            {
+                return _url;
+            }
+            set
+            {
+                WillChangeValue(nameof(Url));
+                _url = value;
+                DidChangeValue(nameof(Url));
+            }
+        }
+
+        [Export("title")]
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                WillChangeValue(nameof(Title));
+                _url = value;
+                DidChangeValue(nameof(Title));
+            }
+        }
+
+        [Export("children")]
+        public NSArray Children => _children;
+
+        [Export("setChildren:")]
+        public void SetChildren(NSMutableArray array)
+        {
+            WillChangeValue(nameof(Children));
+            _children = array;
+            DidChangeValue(nameof(Children));
+        }
+
+        [Export("numberOfChildren")]
+        public nint NumberOfChildren => (nint)_children.Count;
+
+        [Export("isLeaf")]
+        public bool IsLeaf => FileType is NodeType.Unknown or NodeType.Image;
+
+        [Export("isFolder")]
+        public bool IsFolder => FileType is NodeType.Folder;
+
+        [Export("isImage")]
+        public bool IsImage => FileType is NodeType.Image;
+
+        [Export("icon")]
+        public NSImage? Icon
+        {
+            get => null; // node.FileType is NodeType.Image;
+        }
 
         public static FileNode FromUrl(NSUrl url)
         {
@@ -38,5 +112,7 @@ namespace MacGallery
         {
             return $"{Title}, {FileType}, {Url}";
         }
+
+        private FileNode() { }
     }
 }

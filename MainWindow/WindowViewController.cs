@@ -15,6 +15,11 @@ namespace MacGallery.MainWindow
 {
     public partial class WindowViewController : NSViewController
     {
+        public static class Notifications
+        {
+            public static readonly NSString BrowseFolderSelected = new NSString(nameof(BrowseFolderSelected));
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -79,8 +84,9 @@ namespace MacGallery.MainWindow
         {
             Debug.WriteLine(nameof(OnShowBrowseDialog));
             var workingDir = PromptForWorkingDirectory();
-            //var list = EnumerateAllFilesInDirectory(workingDir).ToList();
-            var vc = this.ChildViewControllers;
+            var list = EnumerateAllFilesInDirectory(workingDir).ToList();
+
+            NSNotificationCenter.DefaultCenter.PostNotificationName(Notifications.BrowseFolderSelected, null);
         }
 
         public WindowViewController(IntPtr handle) : base(handle) { }

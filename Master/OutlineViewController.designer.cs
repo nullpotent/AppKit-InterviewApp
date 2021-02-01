@@ -12,9 +12,23 @@ namespace MacGallery
 	[Register ("OutlineViewController")]
 	partial class OutlineViewController
 	{
+		[Outlet]
+		MacGallery.OutlineView outlineView { get; set; }
+
+		[Outlet]
+		AppKit.NSTreeController treeController { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (outlineView != null) {
+				outlineView.Dispose ();
+				outlineView = null;
+			}
+
+			if (treeController != null) {
+				treeController.Dispose ();
+				treeController = null;
+			}
 		}
 	}
 }
