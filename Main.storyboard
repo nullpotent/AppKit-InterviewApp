@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Application-->
+        <scene sceneID="JPo-4y-FX3">
+            <objects>
+                <application id="hnw-xV-0zn" sceneMemberID="viewController">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
+                        <items>
+                            <menuItem title="MacGallery" id="1Xt-HY-uBw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="MacGallery" systemMenu="apple" id="uQy-DD-JDr">
+                                    <items>
+                                        <menuItem title="About MacGallery" id="5kV-Vb-QxS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
+                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                                        <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
+                                        <menuItem title="Services" id="NMo-om-nkz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
+                                        <menuItem title="Hide MacGallery" keyEquivalent="h" id="Olw-nP-bQN">
+                                            <connections>
+                                                <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Hide Others" keyEquivalent="h" id="Vdr-fp-XzO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="hideOtherApplications:" target="Ady-hI-5gd" id="VT4-aY-XCT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show All" id="Kd2-mp-pUS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="Dhg-Le-xox"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
+                                        <menuItem title="Quit MacGallery" keyEquivalent="q" id="4sb-4s-VLi">
+                                            <connections>
+                                                <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="File" id="dMs-cI-mzQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="File" id="bib-Uj-vzu">
+                                    <items>
+                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
+                                            <connections>
+                                                <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
+                    </connections>
+                </application>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+                <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+                <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="0.0"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="R2V-B0-nI4">
+            <objects>
+                <windowController storyboardIdentifier="WindowController" id="B8D-0N-5wS" customClass="WindowController" sceneMemberID="viewController">
+                    <window key="window" identifier="ImageViewer" title="Image Viewer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingIdentifier="Image Viewer" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="700" height="300"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <value key="minSize" type="size" width="700" height="300"/>
+                        <toolbar key="toolbar" implicitIdentifier="D3F00D4D-A56C-444D-8508-FCA5E08A32E3" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="GMk-6f-BWx">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="0FC51B21-8A9F-4284-9656-395F98729763" label="Browse" paletteLabel="Browse" tag="-1" image="NSTouchBarFolderTemplate" id="nbt-rF-92N">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="50" height="24"/>
+                                    <size key="maxSize" width="50" height="24"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="-1" id="2jn-at-KuJ">
+                                        <rect key="frame" x="0.0" y="14" width="50" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSTouchBarFolderTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="xoM-eS-BeL">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="BrowseToolbarAction:" target="B8D-0N-5wS" id="A2U-pI-Bhb"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="nbt-rF-92N"/>
+                            </defaultToolbarItems>
+                            <connections>
+                                <outlet property="delegate" destination="B8D-0N-5wS" id="RJ6-Q4-PPr"/>
+                            </connections>
+                        </toolbar>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <outlet property="toolbar" destination="GMk-6f-BWx" id="6fe-GL-KRg"/>
+                        <segue destination="PWV-OG-huK" kind="relationship" relationship="window.shadowedContentViewController" id="mgJ-xs-Lg5"/>
+                    </connections>
+                </windowController>
+                <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="309"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="Fb0-bq-sOl">
+            <objects>
+                <splitViewController storyboardIdentifier="SplitViewController" id="JWJ-4P-hWF" customClass="SplitViewController" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="9PK-NO-aKE"/>
+                        <splitViewItem id="t7G-Lq-Nqh"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="0NZ-hq-Bri">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="delegate" destination="JWJ-4P-hWF" id="3Mq-sh-jvk"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="0NZ-hq-Bri" id="QGR-H8-gO6"/>
+                        <segue destination="CfW-fC-ys5" kind="relationship" relationship="splitItems" id="0KR-aI-NNQ"/>
+                        <segue destination="etn-cJ-ErY" kind="relationship" relationship="splitItems" id="9HX-z4-VYy"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="Lwi-bC-EQU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="1243"/>
+        </scene>
+        <!--Window View Controller-->
+        <scene sceneID="ebM-So-314">
+            <objects>
+                <customObject id="Sml-au-LZR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="WindowViewController" id="PWV-OG-huK" customClass="WindowViewController" sceneMemberID="viewController">
+                    <view key="view" id="PoM-1b-t3U">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="OWI-jl-X4A">
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="300"/>
+                                <connections>
+                                    <segue destination="JWJ-4P-hWF" kind="embed" id="9Rf-3c-2bL"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="OWI-jl-X4A" secondAttribute="bottom" id="Gmv-5Y-RBZ"/>
+                            <constraint firstItem="OWI-jl-X4A" firstAttribute="top" secondItem="PoM-1b-t3U" secondAttribute="top" id="OrN-Gr-TCG"/>
+                            <constraint firstAttribute="trailing" secondItem="OWI-jl-X4A" secondAttribute="trailing" id="Y5m-6q-OOp"/>
+                            <constraint firstItem="OWI-jl-X4A" firstAttribute="leading" secondItem="PoM-1b-t3U" secondAttribute="leading" id="c9P-Gf-kwj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="OWI-jl-X4A" id="JRf-Wv-aVX"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="91" y="782"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="Ww5-JJ-uic">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" id="etn-cJ-ErY" customClass="DetailViewController" sceneMemberID="viewController">
+                    <view key="view" id="VQy-zc-XHU">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="ggr-gb-XOW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="950" y="1243"/>
+        </scene>
+        <!--Initial View Controller-->
+        <scene sceneID="Peb-2O-2uQ">
+            <objects>
+                <viewController storyboardIdentifier="InitialViewController" id="Jrs-bQ-M8M" customClass="InitialViewController" sceneMemberID="viewController">
+                    <view key="view" id="GgL-UB-Zhu">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nl9-Qc-oS7">
+                                <rect key="frame" x="210" y="139" width="281" height="23"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Click &quot;Browse&quot; to select folder." id="1W0-qb-chX">
+                                    <font key="font" size="20" name="HelveticaNeue"/>
+                                    <color key="textColor" name="placeholderTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Nl9-Qc-oS7" firstAttribute="centerX" secondItem="GgL-UB-Zhu" secondAttribute="centerX" id="Vax-Ib-ktN"/>
+                            <constraint firstItem="Nl9-Qc-oS7" firstAttribute="centerY" secondItem="GgL-UB-Zhu" secondAttribute="centerY" id="dQn-Lr-gb9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="2wW-gs-dmf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1099" y="451"/>
+        </scene>
+        <!--OutlineViewController-->
+        <scene sceneID="2O0-hU-aOX">
+            <objects>
+                <viewController storyboardIdentifier="OutlineViewController" id="CfW-fC-ys5" userLabel="OutlineViewController" customClass="OutlineViewController" customModule="MacGallery" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" misplaced="YES" id="RnT-V4-gtt">
+                        <rect key="frame" x="0.0" y="0.0" width="216" height="42"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3a4-V3-www">
+                                <rect key="frame" x="0.0" y="0.0" width="216" height="43"/>
+                                <clipView key="contentView" drawsBackground="NO" id="tmQ-OT-xwG">
+                                    <rect key="frame" x="1" y="1" width="214" height="41"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="OutlineView" rowHeight="24" rowSizeStyle="systemDefault" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" autosaveExpandedItems="YES" outlineTableColumn="ao3-Ti-sdk" id="fwU-kS-BQz" customClass="OutlineView" customModule="MacGallery" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="214" height="41"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn width="211" minWidth="16" maxWidth="1000" id="ao3-Ti-sdk">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="W7s-x5-1D3">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <tableCellView identifier="GroupCell" id="JdZ-i0-Yea">
+                                                            <rect key="frame" x="1" y="1" width="211" height="10"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cr5-hq-7fp">
+                                                                    <rect key="frame" x="0.0" y="-2" width="211" height="14"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="HEADER CELL" id="qh3-th-TcG">
+                                                                        <font key="font" metaFont="smallSystemBold"/>
+                                                                        <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="cr5-hq-7fp" firstAttribute="centerY" secondItem="JdZ-i0-Yea" secondAttribute="centerY" id="NYB-SW-hz9"/>
+                                                                <constraint firstItem="cr5-hq-7fp" firstAttribute="leading" secondItem="JdZ-i0-Yea" secondAttribute="leading" constant="2" id="SUi-Om-qeH"/>
+                                                                <constraint firstItem="cr5-hq-7fp" firstAttribute="centerX" secondItem="JdZ-i0-Yea" secondAttribute="centerX" id="t1e-1u-VFm"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="textField" destination="cr5-hq-7fp" id="Svt-cI-WGF"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="MainCell" misplaced="YES" id="wFI-qp-fC3">
+                                                            <rect key="frame" x="1" y="13" width="211" height="10"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="WKw-LC-Ulg">
+                                                                    <rect key="frame" x="3" y="1" width="14" height="14"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" secondItem="WKw-LC-Ulg" secondAttribute="height" multiplier="1:1" id="CTY-jw-ioL"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" imageScaling="axesIndependently" image="NSActionTemplate" id="F61-8W-veF"/>
+                                                                </imageView>
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="stY-Cn-ZnD">
+                                                                    <rect key="frame" x="23" y="-1" width="187" height="16"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="VeW-5b-Wbl">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="CfW-fC-ys5" id="Azn-xL-Xxo"/>
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="stY-Cn-ZnD" firstAttribute="leading" secondItem="WKw-LC-Ulg" secondAttribute="trailing" constant="8" id="6lW-mb-rjb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="WKw-LC-Ulg" secondAttribute="bottom" constant="1" id="8OS-Lt-3aK"/>
+                                                                <constraint firstAttribute="trailing" secondItem="stY-Cn-ZnD" secondAttribute="trailing" constant="3" id="GGP-dR-iBX"/>
+                                                                <constraint firstItem="WKw-LC-Ulg" firstAttribute="leading" secondItem="wFI-qp-fC3" secondAttribute="leading" constant="3" id="npr-df-VgQ"/>
+                                                                <constraint firstItem="stY-Cn-ZnD" firstAttribute="centerY" secondItem="wFI-qp-fC3" secondAttribute="centerY" id="odD-ns-OPr"/>
+                                                                <constraint firstItem="WKw-LC-Ulg" firstAttribute="top" secondItem="wFI-qp-fC3" secondAttribute="top" constant="-1" id="t2N-dV-ndo"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="imageView" destination="WKw-LC-Ulg" id="zvG-eu-fju"/>
+                                                                <outlet property="textField" destination="stY-Cn-ZnD" id="COp-mv-CBK"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <customView identifier="Separator" id="7LF-JE-eMh" userLabel="Separator View" customClass="SeparatorView" customModule="SourceView">
+                                                            <rect key="frame" x="1" y="25" width="211" height="2"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        </customView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <binding destination="YAi-vI-4db" name="content" keyPath="arrangedObjects" id="9hH-mX-TxW"/>
+                                                <binding destination="YAi-vI-4db" name="selectionIndexPaths" keyPath="selectionIndexPaths" previousBinding="9hH-mX-TxW" id="o53-fi-7Mx"/>
+                                                <outlet property="dataSource" destination="CfW-fC-ys5" id="Hrk-UU-tdZ"/>
+                                                <outlet property="delegate" destination="CfW-fC-ys5" id="Oib-q3-Yh1"/>
+                                            </connections>
+                                        </outlineView>
+                                    </subviews>
+                                    <nil key="backgroundColor"/>
+                                </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="Eo0-tc-ghH"/>
+                                </constraints>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="aYR-48-t5R">
+                                    <rect key="frame" x="1" y="423" width="208" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MAw-5H-Fvb">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3a4-V3-www" secondAttribute="trailing" id="DHr-px-qmD"/>
+                            <constraint firstAttribute="bottom" secondItem="3a4-V3-www" secondAttribute="bottom" id="JNr-Ry-5ac"/>
+                            <constraint firstItem="3a4-V3-www" firstAttribute="leading" secondItem="RnT-V4-gtt" secondAttribute="leading" id="Jjl-Wi-Rpi"/>
+                            <constraint firstItem="3a4-V3-www" firstAttribute="top" secondItem="RnT-V4-gtt" secondAttribute="top" id="qRO-4H-nsO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="outlineView" destination="fwU-kS-BQz" id="yIQ-qL-NOc"/>
+                        <outlet property="treeController" destination="YAi-vI-4db" id="967-lN-9rY"/>
+                    </connections>
+                </viewController>
+                <customObject id="BJE-X0-eZB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <treeController objectClassName="Node" childrenKeyPath="children" leafKeyPath="isLeaf" avoidsEmptySelection="NO" id="YAi-vI-4db" userLabel="OutlineController">
+                    <connections>
+                        <binding destination="CfW-fC-ys5" name="contentArray" keyPath="contents" id="hKo-82-Ui2"/>
+                    </connections>
+                </treeController>
+            </objects>
+            <point key="canvasLocation" x="91" y="1621"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSTouchBarFolderTemplate" width="22" height="30"/>
+    </resources>
+</document>
