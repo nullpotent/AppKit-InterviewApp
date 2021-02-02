@@ -2,10 +2,10 @@
 using AppKit;
 using Foundation;
 
-namespace MacGallery
+namespace MacGallery.ThumbnailGrid.Models
 {
-    [Register(nameof(IconView))]
-    public class IconView : NSObject
+    [Register(nameof(ThumbnailModel))]
+    public class ThumbnailModel : NSObject
     {
         private NSString? _name = default;
         private NSImage? _icon;
@@ -35,6 +35,18 @@ namespace MacGallery
                 _name = value;
                 DidChangeValue("name");
             }
+        }
+
+        public ThumbnailModel(string name, NSImage? icon)
+        {
+            Name = (NSString)name;
+            Icon = icon;
+        }
+
+        public ThumbnailModel(NSString name, NSImage? icon)
+        {
+            Name = name;
+            Icon = icon;
         }
     }
 }

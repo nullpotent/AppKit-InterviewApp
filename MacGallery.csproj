@@ -76,11 +76,9 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Master\" />
-    <Folder Include="Detail\" />
+    <Folder Include="ThumbnailGrid\" />
     <Folder Include="MainWindow\" />
-    <Folder Include="Master\Views\" />
-    <Folder Include="Detail\Views\" />
+    <Folder Include="ThumbnailGrid\Model\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -90,14 +88,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="FileNode.cs" />
     <Compile Include="Extensions\FileNodeExtensions.cs" />
     <Compile Include="Extensions\NSUrlExtensions.cs" />
     <Compile Include="Extensions\NSOpenPanelExtensions.cs" />
-    <Compile Include="MainWindow\SplitViewController.cs" />
-    <Compile Include="MainWindow\SplitViewController.designer.cs">
-      <DependentUpon>SplitViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow\WindowController.cs" />
     <Compile Include="MainWindow\WindowController.designer.cs">
       <DependentUpon>WindowController.cs</DependentUpon>
@@ -106,43 +99,30 @@
     <Compile Include="MainWindow\WindowViewController.designer.cs">
       <DependentUpon>WindowViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Detail\DetailViewController.cs" />
-    <Compile Include="Detail\DetailViewController.designer.cs">
-      <DependentUpon>DetailViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\OutlineViewController.cs" />
-    <Compile Include="Master\OutlineViewController.designer.cs">
-      <DependentUpon>OutlineViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Views\SeparatorView.cs" />
-    <Compile Include="Master\Views\SeparatorView.designer.cs">
-      <DependentUpon>SeparatorView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Views\OutlineView.cs" />
-    <Compile Include="Master\Views\OutlineView.designer.cs">
-      <DependentUpon>OutlineView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Detail\Views\DetailViewContainer.cs" />
-    <Compile Include="Detail\Views\DetailViewContainer.designer.cs">
-      <DependentUpon>DetailViewContainer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Detail\InitialViewController.cs" />
-    <Compile Include="Detail\InitialViewController.designer.cs">
+    <Compile Include="Extensions\DirectoryExtensions.cs" />
+    <Compile Include="ThumbnailGrid\Model\ThumbnailModel.cs" />
+    <Compile Include="MainWindow\InitialViewController.cs" />
+    <Compile Include="MainWindow\InitialViewController.designer.cs">
       <DependentUpon>InitialViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\DirectoryExtensions.cs" />
-    <Compile Include="IconViewController.cs" />
-    <Compile Include="IconViewController.designer.cs">
-      <DependentUpon>IconViewController.cs</DependentUpon>
+    <Compile Include="ThumbnailGrid\ThumbnailItem.cs" />
+    <Compile Include="ThumbnailGrid\ThumbnailItemController.cs" />
+    <Compile Include="ThumbnailGrid\ThumbnailItem.designer.cs">
+      <DependentUpon>ThumbnailItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="IconView.cs" />
-    <Compile Include="CollectionView.cs" />
-    <Compile Include="CollectionView.designer.cs">
-      <DependentUpon>CollectionView.cs</DependentUpon>
+    <Compile Include="ThumbnailGrid\ThumbnailItemController.designer.cs">
+      <DependentUpon>ThumbnailItemController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThumbnailGrid\ThumbnailGridSource.cs" />
+    <Compile Include="ThumbnailGrid\ThumbnailGridDelegate.cs" />
+    <Compile Include="ThumbnailGrid\ThumbnailGridViewController.cs" />
+    <Compile Include="ThumbnailGrid\ThumbnailGridViewController.designer.cs">
+      <DependentUpon>ThumbnailGridViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="ThumbnailGrid\ThumbnailItemController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

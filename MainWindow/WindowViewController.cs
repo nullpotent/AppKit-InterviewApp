@@ -11,12 +11,15 @@ using MacGallery.Extensions;
 using System.IO;
 using System.Linq;
 using CoreFoundation;
+using MacGallery.ThumbnailGrid;
 
 namespace MacGallery.MainWindow
 {
     public partial class WindowViewController : NSViewController
     {
-        private IconViewController? iconViewController;
+        private ThumbnailGridViewController? iconViewController;
+        private NSLayoutConstraint[] horizontalConstraints;
+        private NSLayoutConstraint[] verticalConstraints;
 
         public static class Notifications
         {
@@ -27,7 +30,7 @@ namespace MacGallery.MainWindow
         {
             base.ViewDidLoad();
             ShowProgress(false);
-            iconViewController = Storyboard.InstantiateControllerWithIdentifier(nameof(IconViewController)) as IconViewController;
+            iconViewController = Storyboard.InstantiateControllerWithIdentifier(nameof(ThumbnailGridViewController)) as ThumbnailGridViewController;
             SetupObservers();
         }
 
@@ -71,6 +74,15 @@ namespace MacGallery.MainWindow
 
             childViewController.View.Frame = containerView.Bounds;
             containerView.AddSubview(childViewController.View);
+
+            var views = new NSMutableDictionary();
+            views.Add(new NSString("targetView"), childViewController.View);
+            horizontalConstraints = NSLayoutConstraint.FromVisualFormat("H:|[targetView]|", NSLayoutFormatOptions.None, null, views);
+            NSLayoutConstraint.ActivateConstraints(horizontalConstraints);
+
+            verticalConstraints =
+                NSLayoutConstraint.FromVisualFormat("V:|[targetView]|", NSLayoutFormatOptions.None, null, views);
+            NSLayoutConstraint.ActivateConstraints(verticalConstraints);
         }
 
         partial void BrowseToolbarAction(NSObject sender)
