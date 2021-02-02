@@ -4,12 +4,22 @@ using System;
 
 using Foundation;
 using AppKit;
+using System.Diagnostics;
+using MacGallery.MainWindow;
+using ObjCRuntime;
+using MacGallery.Extensions;
+using CoreFoundation;
 
 namespace MacGallery
 {
     public partial class OutlineViewController : NSViewController, INSOutlineViewDataSource, INSOutlineViewDelegate
     {
-        private NSMutableArray _contents = new NSMutableArray();
+        private NSArray _contents = new NSArray();
+        private NSOperationQueue OpQueue = new NSOperationQueue()
+        {
+            QualityOfService = NSQualityOfService.UserInteractive,
+            MaxConcurrentOperationCount = 1,
+        };
 
         [Export("contents")]
         public NSArray Contents
@@ -17,8 +27,8 @@ namespace MacGallery
             get => _contents;
         }
 
-        [Export("setContentsArray:")]
-        public void SetContents(NSMutableArray array)
+        [Export("setContents:")]
+        internal void SetContents(NSArray array)
         {
             WillChangeValue("contents");
             _contents = array;
@@ -44,7 +54,61 @@ namespace MacGallery
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            SetupObservers();
             initialViewController = Storyboard!.InstantiateControllerWithIdentifier(nameof(InitialViewController)) as InitialViewController;
+        }
+
+
+        private void SetupObservers()
+        {
+            NSNotificationCenter.DefaultCenter.AddObserver(
+                this,
+                new Selector("onFolderContents:"),
+                WindowViewController.Notifications.OnFolderContents,
+                null);
+        }
+
+        [Export("onFolderContents:")]
+        private void OnFolderContents(NSNotification notification)
+        {
+            Debug.WriteLine(nameof(OnFolderContents));
+            if (notification.Object is NSArray contents)
+            {
+                SetContents(contents);
+            }
+        }
+
+        [Export("outlineView:viewForTableColumn:item:")]
+        public NSView? GetView(NSOutlineView outlineView, NSTableColumn tableColumn, NSObject item)
+        {
+            var node = FileNode.From(item);
+
+            if (outlineView.MakeView("MainCell", this) is NSTableCellView view)
+            {
+                //Debug.WriteLine("GetView " + node.Title);
+                view.TextField.StringValue = node.Title;
+                view.ImageView.Image = node.Icon;
+                //(new NSString("image"), node, "icon", null);
+
+                //if (node.IsFolder)
+                //{
+                //view.ImageView.Image = NSWorkspace.SharedWorkspace.IconForFileType(HfsTypeCode.GenericFolderIcon);
+                //}
+                //else
+                //{
+                //    OpQueue.AddOperation(() =>
+                //    {
+                //        var icon = node.Url.GetIcon();
+                //        BeginInvokeOnMainThread(() =>
+                //        {
+                //            view.ImageView.Image = icon;
+                //        });
+                //    });
+                //}
+                return view;
+            }
+
+            return null;
         }
 
         public OutlineViewController(IntPtr handle) : base(handle) { }

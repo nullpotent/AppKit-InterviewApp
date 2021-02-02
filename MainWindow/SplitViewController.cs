@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using AppKit;
 using Foundation;
 using ObjCRuntime;
@@ -45,12 +46,10 @@ namespace MacGallery.MainWindow
             currentDetailVC.View.AddSubview(childViewController.View);
 
             // Build the horizontal, vertical constraints so that added child view controllers matches the width and height of it's parent.
-
             var views = new NSMutableDictionary();
             views.Add(new NSString("targetView"), childViewController.View);
             horizontalConstraints = NSLayoutConstraint.FromVisualFormat("H:|[targetView]|", NSLayoutFormatOptions.None, null, views);
             NSLayoutConstraint.ActivateConstraints(horizontalConstraints);
-
 
             verticalConstraints =
                 NSLayoutConstraint.FromVisualFormat("V:|[targetView]|", NSLayoutFormatOptions.None, null, views);
@@ -65,10 +64,9 @@ namespace MacGallery.MainWindow
         {
             base.ViewDidLoad();
 
+            GetSplitViewItem(OutlineViewController).Collapsed = true;
             var initialViewController = OutlineViewController.ViewControllerForSelection(null)!;
             EmbedChildViewController(initialViewController);
-
-            GetSplitViewItem(OutlineViewController).Collapsed = true;
             SetupObservers();
         }
 
@@ -76,15 +74,17 @@ namespace MacGallery.MainWindow
         {
             NSNotificationCenter.DefaultCenter.AddObserver(
                 this,
-                new Selector("onBrowseFolderSelected:"),
-                WindowViewController.Notifications.BrowseFolderSelected,
+                new Selector("onFolderContents:"),
+                WindowViewController.Notifications.OnFolderContents,
                 null);
         }
 
-        [Export("onBrowseFolderSelected:")]
-        private void OnBrowseFolderSelected(NSNotification notification)
+        [Export("onFolderContents:")]
+        private void OnFolderContents(NSNotification notification)
         {
-            Debug.WriteLine(nameof(OnBrowseFolderSelected));
+            Debug.WriteLine(nameof(OnFolderContents));
+            DetailViewController.RemoveChildViewController(0);
+            DetailViewController.View.Subviews.FirstOrDefault()?.RemoveFromSuperview();
             GetSplitViewItem(OutlineViewController).Collapsed = false;
         }
 

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using Foundation;
 using MacGallery.Extensions;
-using System.Diagnostics;
 using AppKit;
 
 namespace MacGallery
@@ -19,8 +17,9 @@ namespace MacGallery
     {
         private NSMutableArray _children = new NSMutableArray();
         private NodeType _fileType = NodeType.Unknown;
-        private string _url = string.Empty;
-        private string _title = string.Empty;
+        private NSUrl? _url = default;
+        private string? _title = default;
+        private NSImage? _icon;
 
         [Export("fileType")]
         public NodeType FileType
@@ -31,14 +30,14 @@ namespace MacGallery
             }
             set
             {
-                WillChangeValue(nameof(FileType));
+                WillChangeValue("fileType");
                 _fileType = value;
-                DidChangeValue(nameof(FileType));
+                DidChangeValue("fileType");
             }
         }
 
         [Export("url")]
-        public string Url
+        public NSUrl? Url
         {
             get
             {
@@ -46,9 +45,9 @@ namespace MacGallery
             }
             set
             {
-                WillChangeValue(nameof(Url));
+                WillChangeValue("url");
                 _url = value;
-                DidChangeValue(nameof(Url));
+                DidChangeValue("url");
             }
         }
 
@@ -57,13 +56,13 @@ namespace MacGallery
         {
             get
             {
-                return _title;
+                return _title ?? string.Empty;
             }
             set
             {
-                WillChangeValue(nameof(Title));
-                _url = value;
-                DidChangeValue(nameof(Title));
+                WillChangeValue("title");
+                _title = value;
+                DidChangeValue("title");
             }
         }
 
@@ -73,9 +72,9 @@ namespace MacGallery
         [Export("setChildren:")]
         public void SetChildren(NSMutableArray array)
         {
-            WillChangeValue(nameof(Children));
+            WillChangeValue("children");
             _children = array;
-            DidChangeValue(nameof(Children));
+            DidChangeValue("children");
         }
 
         [Export("numberOfChildren")]
@@ -93,26 +92,34 @@ namespace MacGallery
         [Export("icon")]
         public NSImage? Icon
         {
-            get => null; // node.FileType is NodeType.Image;
+            get => _icon;
+            set
+            {
+                WillChangeValue("icon");
+                _icon = value;
+                DidChangeValue("icon");
+            }
         }
 
-        public static FileNode FromUrl(NSUrl url)
+        public static FileNode? From(NSObject? obj)
         {
-            var node = new FileNode
+            return obj switch
             {
-                Url = url.AbsoluteString,
-                FileType = url.IsFolder() ? NodeType.Folder : url.IsImage() ? NodeType.Image : NodeType.Unknown,
-                Title = url.GetLocalizedName()
+                NSTreeNode treeNode => treeNode?.RepresentedObject as FileNode,
+                NSUrl url => new FileNode
+                {
+                    Url = url,
+                    //Icon = url.GetIcon(),
+                    FileType = url.IsFolder() ? NodeType.Folder : url.IsImage() ? NodeType.Image : NodeType.Unknown,
+                    Title = url.GetLocalizedName()
+                },
+                _ => null
             };
-            Debug.WriteLine(node);
-            return node;
         }
 
         public override string ToString()
         {
             return $"{Title}, {FileType}, {Url}";
         }
-
-        private FileNode() { }
     }
 }

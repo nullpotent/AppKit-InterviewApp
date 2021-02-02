@@ -17,7 +17,7 @@ namespace MacGallery.MainWindow
     {
         public static class Notifications
         {
-            public static readonly NSString BrowseFolderSelected = new NSString(nameof(BrowseFolderSelected));
+            public static readonly NSString OnFolderContents = new NSString(nameof(OnFolderContents));
         }
 
         public override void ViewDidLoad()
@@ -38,12 +38,21 @@ namespace MacGallery.MainWindow
 
             return openPanel.Show() switch
             {
-                NSModalResponse.OK => openPanel.Urls.FirstOrDefault(),
+                NSModalResponse.OK => openPanel.DirectoryUrl,
                 _ => null
             };
         }
 
-        private IEnumerable<FileNode> EnumerateAllFilesInDirectory(NSUrl? folderUrl)
+        private static IEnumerable<string> GetFiles(string path,
+                    string[] searchPatterns,
+                    SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return searchPatterns.AsParallel()
+                   .SelectMany(searchPattern =>
+                          Directory.EnumerateDirectories(path, $"*.{searchPattern}", searchOption));
+        }
+
+        private IEnumerable<FileNode?> EnumerateAllFilesInDirectory(NSUrl? folderUrl)
         {
             if (folderUrl is null)
             {
@@ -56,18 +65,16 @@ namespace MacGallery.MainWindow
             }
 
             var fileManager = NSFileManager.DefaultManager;
-            var files = fileManager.GetDirectoryContent(
-                folderUrl,
-                NSArray.FromObjects(),
-                NSDirectoryEnumerationOptions.SkipsHiddenFiles,
-                out var error);
-
+            var files = fileManager.GetDirectoryContent(folderUrl,
+                                                        NSArray.FromObjects(NSUrl.IsDirectoryKey, NSUrl.IsPackageKey, NSUrl.TypeIdentifierKey, NSUrl.LocalizedNameKey),
+                                                        NSDirectoryEnumerationOptions.SkipsHiddenFiles,
+                                                        out var error);
             if (error != null)
             {
                 throw new NSErrorException(error);
             }
 
-            return files.Select(FileNode.FromUrl);
+            return files.Select(FileNode.From).Where(f => f.IsFolder || f.IsImage);
         }
 
         private void SetupObservers()
@@ -84,9 +91,8 @@ namespace MacGallery.MainWindow
         {
             Debug.WriteLine(nameof(OnShowBrowseDialog));
             var workingDir = PromptForWorkingDirectory();
-            var list = EnumerateAllFilesInDirectory(workingDir).ToList();
-
-            NSNotificationCenter.DefaultCenter.PostNotificationName(Notifications.BrowseFolderSelected, null);
+            var contents = NSArray.FromObjects(EnumerateAllFilesInDirectory(workingDir).ToArray());
+            NSNotificationCenter.DefaultCenter.PostNotificationName(Notifications.OnFolderContents, contents);
         }
 
         public WindowViewController(IntPtr handle) : base(handle) { }

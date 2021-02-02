@@ -130,6 +130,7 @@
     <Compile Include="Detail\InitialViewController.designer.cs">
       <DependentUpon>InitialViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\DirectoryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
