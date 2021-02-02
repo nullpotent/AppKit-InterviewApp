@@ -9,6 +9,9 @@ using MacGallery.MainWindow;
 using ObjCRuntime;
 using MacGallery.Extensions;
 using CoreFoundation;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace MacGallery
 {
@@ -18,7 +21,7 @@ namespace MacGallery
         private NSOperationQueue OpQueue = new NSOperationQueue()
         {
             QualityOfService = NSQualityOfService.UserInteractive,
-            MaxConcurrentOperationCount = 1,
+            MaxConcurrentOperationCount = 8,
         };
 
         [Export("contents")]
@@ -58,24 +61,79 @@ namespace MacGallery
             initialViewController = Storyboard!.InstantiateControllerWithIdentifier(nameof(InitialViewController)) as InitialViewController;
         }
 
-
         private void SetupObservers()
         {
-            NSNotificationCenter.DefaultCenter.AddObserver(
-                this,
-                new Selector("onFolderContents:"),
-                WindowViewController.Notifications.OnFolderContents,
-                null);
+            //NSNotificationCenter.DefaultCenter.AddObserver(
+            //    this,
+            //    new Selector("onFolderContents:"),
+            //    WindowViewController.Notifications.OnFolderContents,
+            //    null);
         }
 
         [Export("onFolderContents:")]
         private void OnFolderContents(NSNotification notification)
         {
             Debug.WriteLine(nameof(OnFolderContents));
-            if (notification.Object is NSArray contents)
+            if (notification.Object is NSUrl workingDir)
             {
-                SetContents(contents);
+                OpQueue.AddOperation(() =>
+                {
+                    var contents = EnumerateAllFilesInDirectory(workingDir)
+                        .Where(url => url.IsFolder() || url.IsImage())
+                        .Select(FileNode.From)
+                        .ToArray();
+                    DispatchQueue.MainQueue.DispatchAsync(() =>
+                    {
+                        SetContents(NSArray.FromObjects(contents));
+                    });
+                });
+
+                //for (var i = 0; i < contents.Length; i += 1)
+                //{
+                //    var node = contents[i];
+                //    //OpQueue.AddOperation(() =>
+                //    //{
+                //    //    node.Icon = node.Url.GetIcon();
+                //    //    BeginInvokeOnMainThread(() =>
+                //    //    {
+                //    //        outlineView.ReloadData(); // NSIndexSet.FromIndex(i), NSIndexSet.FromIndex(0));
+                //    //        //WillChangeValue("contents");
+                //    //        //Contents.Add(node);
+                //    //        //DidChangeValue("contents");
+                //    //    });
+
+                //    //    //node.Icon = node.Url.GetIcon();
+                //    //    //treeController.UsesLazyFetching
+                //    //    //this.treeController.
+                //    //});
+                //}
+                //outlineView.EndUpdates();
             }
+        }
+
+        private IEnumerable<NSUrl?> EnumerateAllFilesInDirectory(NSUrl? folderUrl)
+        {
+            if (folderUrl is null)
+            {
+                throw new ArgumentNullException(nameof(folderUrl));
+            }
+
+            if (!folderUrl.IsFolder())
+            {
+                throw new DirectoryNotFoundException(folderUrl.Path);
+            }
+
+            var fileManager = NSFileManager.DefaultManager;
+            var files = fileManager.GetDirectoryContent(folderUrl,
+                                                        NSArray.FromObjects(NSUrl.IsDirectoryKey, NSUrl.IsPackageKey, NSUrl.TypeIdentifierKey, NSUrl.LocalizedNameKey),
+                                                        NSDirectoryEnumerationOptions.SkipsHiddenFiles,
+                                                        out var error);
+            if (error != null)
+            {
+                throw new NSErrorException(error);
+            }
+
+            return files;
         }
 
         [Export("outlineView:viewForTableColumn:item:")]
@@ -85,26 +143,17 @@ namespace MacGallery
 
             if (outlineView.MakeView("MainCell", this) is NSTableCellView view)
             {
-                //Debug.WriteLine("GetView " + node.Title);
                 view.TextField.StringValue = node.Title;
                 view.ImageView.Image = node.Icon;
-                //(new NSString("image"), node, "icon", null);
 
-                //if (node.IsFolder)
-                //{
-                //view.ImageView.Image = NSWorkspace.SharedWorkspace.IconForFileType(HfsTypeCode.GenericFolderIcon);
-                //}
-                //else
-                //{
-                //    OpQueue.AddOperation(() =>
-                //    {
-                //        var icon = node.Url.GetIcon();
-                //        BeginInvokeOnMainThread(() =>
-                //        {
-                //            view.ImageView.Image = icon;
-                //        });
-                //    });
-                //}
+                if (node.Icon == null)
+                {
+                    OpQueue.AddOperation(() =>
+                    {
+                        node.LoadIcon();
+                        BeginInvokeOnMainThread(() => outlineView.ReloadItem(item));
+                    });
+                }
                 return view;
             }
 

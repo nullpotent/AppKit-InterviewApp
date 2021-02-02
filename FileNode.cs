@@ -121,5 +121,12 @@ namespace MacGallery
         {
             return $"{Title}, {FileType}, {Url}";
         }
+
+        internal void LoadIcon()
+        {
+            Icon = IsFolder ?
+                NSWorkspace.SharedWorkspace.IconForFileType(HfsTypeCode.GenericFolderIcon) :
+                Url?.GetIcon();
+        }
     }
 }

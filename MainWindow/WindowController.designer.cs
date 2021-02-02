@@ -15,9 +15,6 @@ namespace MacGallery.MainWindow
         [Outlet]
         AppKit.NSToolbar toolbar { get; set; }
 
-        [Action("BrowseToolbarAction:")]
-        partial void BrowseToolbarAction(Foundation.NSObject sender);
-
         void ReleaseDesignerOutlets()
         {
             if (toolbar != null)

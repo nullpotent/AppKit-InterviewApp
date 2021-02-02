@@ -9,19 +9,29 @@ using System.CodeDom.Compiler;
 
 namespace MacGallery.MainWindow
 {
-    [Register("WindowViewController")]
-    partial class WindowViewController
-    {
-        [Outlet]
-        AppKit.NSView containerView { get; set; }
+	[Register ("WindowViewController")]
+	partial class WindowViewController
+	{
+		[Outlet]
+		AppKit.NSView containerView { get; set; }
 
-        void ReleaseDesignerOutlets()
-        {
-            if (containerView != null)
-            {
-                containerView.Dispose();
-                containerView = null;
-            }
-        }
-    }
+		[Outlet]
+		AppKit.NSProgressIndicator progressBar { get; set; }
+
+		[Action ("BrowseToolbarAction:")]
+		partial void BrowseToolbarAction (Foundation.NSObject sender);
+		
+		void ReleaseDesignerOutlets ()
+		{
+			if (containerView != null) {
+				containerView.Dispose ();
+				containerView = null;
+			}
+
+			if (progressBar != null) {
+				progressBar.Dispose ();
+				progressBar = null;
+			}
+		}
+	}
 }

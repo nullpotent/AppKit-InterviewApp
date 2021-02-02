@@ -68,7 +68,7 @@ namespace MacGallery.Extensions
             return false;
         }
 
-        public static string GetLocalizedName(this NSUrl url)
+        public static NSString GetLocalizedName(this NSUrl url)
         {
             if (url.TryGetResource(NSUrl.LocalizedNameKey, out var nameObj, out var error))
             {
@@ -77,7 +77,7 @@ namespace MacGallery.Extensions
             else
             {
                 // Failed to get the localized name, use it's last path component as the name.
-                return url.LastPathComponent;
+                return (NSString)url.LastPathComponent;
             }
         }
 
@@ -97,29 +97,37 @@ namespace MacGallery.Extensions
 
         public static NSImage? GetIcon(this NSUrl url)
         {
-            //var resources = url.GetResourceValues(new[] {
-            //    NSUrl.CustomIconKey, NSUrl.EffectiveIconKey, NSUrl.ThumbnailDictionaryKey
-            //}, out var error);
+            var resources = url.GetResourceValues(new[] {
+                NSUrl.CustomIconKey, NSUrl.EffectiveIconKey, NSUrl.ThumbnailDictionaryKey
+            }, out var error);
 
-            //if (resources == null || error != null)
-            //{
-            //    Debug.WriteLine(error);
-            //    var osType = IsFolder(url) ? HfsTypeCode.GenericFolderIcon : HfsTypeCode.GenericDocumentIcon;
-            //    return NSWorkspace.SharedWorkspace.IconForFileType(osType);
-            //}
+            if (resources == null || error != null)
+            {
+                Debug.WriteLine(error);
+                var osType = IsFolder(url) ? HfsTypeCode.GenericFolderIcon : HfsTypeCode.GenericDocumentIcon;
+                return NSWorkspace.SharedWorkspace.IconForFileType(osType);
+            }
 
-            //if (resources.TryGetValue(NSUrl.ThumbnailDictionaryKey, out var thumbnailObj))
-            //{
-            //    return ImageWithPreviewOfFileAtPath(url);
-            //}
-            //else if (resources.TryGetValue(NSUrl.CustomIconKey, out var customIconObj) && customIconObj is NSImage customIcon)
-            //{
-            //    return customIcon;
-            //}
-            //else if (resources.TryGetValue(NSUrl.EffectiveIconKey, out var effectiveIconObj) && effectiveIconObj is NSImage effectiveIcon)
-            //{
-            //    return effectiveIcon;
-            //}
+            if (resources.TryGetValue(NSUrl.ThumbnailDictionaryKey, out var thumbnailObj) && thumbnailObj is NSDictionary thumbnailDict)
+            {
+                thumbnailDict.TryGetValue((NSString)"NSThumbnail1024x1024SizeKey", out var val);
+                if (val is NSImage image)
+                {
+                    return image;
+                }
+                else
+                {
+                    return ImageWithPreviewOfFileAtPath(url);
+                }
+            }
+            else if (resources.TryGetValue(NSUrl.CustomIconKey, out var customIconObj) && customIconObj is NSImage customIcon)
+            {
+                return customIcon;
+            }
+            else if (resources.TryGetValue(NSUrl.EffectiveIconKey, out var effectiveIconObj) && effectiveIconObj is NSImage effectiveIcon)
+            {
+                return effectiveIcon;
+            }
 
             //return null;
 

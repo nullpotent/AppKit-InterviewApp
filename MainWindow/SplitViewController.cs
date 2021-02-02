@@ -72,11 +72,11 @@ namespace MacGallery.MainWindow
 
         private void SetupObservers()
         {
-            NSNotificationCenter.DefaultCenter.AddObserver(
-                this,
-                new Selector("onFolderContents:"),
-                WindowViewController.Notifications.OnFolderContents,
-                null);
+            //NSNotificationCenter.DefaultCenter.AddObserver(
+            //    this,
+            //    new Selector("onFolderContents:"),
+            //    WindowViewController.Notifications.OnFolderContents,
+            //    null);
         }
 
         [Export("onFolderContents:")]

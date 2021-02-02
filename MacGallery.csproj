@@ -131,6 +131,15 @@
       <DependentUpon>InitialViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\DirectoryExtensions.cs" />
+    <Compile Include="IconViewController.cs" />
+    <Compile Include="IconViewController.designer.cs">
+      <DependentUpon>IconViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IconView.cs" />
+    <Compile Include="CollectionView.cs" />
+    <Compile Include="CollectionView.designer.cs">
+      <DependentUpon>CollectionView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
