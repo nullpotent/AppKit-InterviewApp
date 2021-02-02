@@ -7,33 +7,30 @@ namespace MacGallery.ThumbnailGrid.Models
     [Register(nameof(ThumbnailModel))]
     public class ThumbnailModel : NSObject
     {
-        private NSString? _name = default;
+        private NSString? _name;
         private NSImage? _icon;
 
-        [Export("icon")]
+        [Export(nameof(Icon))]
         public NSImage? Icon
         {
             get => _icon;
             set
             {
-                WillChangeValue("icon");
+                WillChangeValue(nameof(Icon));
                 _icon = value;
-                DidChangeValue("icon");
+                DidChangeValue(nameof(Icon));
             }
         }
 
-        [Export("name")]
+        [Export(nameof(Name))]
         public NSString Name
         {
-            get
-            {
-                return _name ?? NSString.Empty;
-            }
+            get => _name ?? NSString.Empty;
             set
             {
-                WillChangeValue("name");
+                WillChangeValue(nameof(Name));
                 _name = value;
-                DidChangeValue("name");
+                DidChangeValue(nameof(Name));
             }
         }
 

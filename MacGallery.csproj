@@ -74,7 +74,6 @@
     <ImageAsset Include="Assets.xcassets\Contents.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="Extensions\" />
     <Folder Include="ThumbnailGrid\" />
     <Folder Include="MainWindow\" />
@@ -88,7 +87,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Extensions\FileNodeExtensions.cs" />
     <Compile Include="Extensions\NSUrlExtensions.cs" />
     <Compile Include="Extensions\NSOpenPanelExtensions.cs" />
     <Compile Include="MainWindow\WindowController.cs" />
@@ -99,7 +97,6 @@
     <Compile Include="MainWindow\WindowViewController.designer.cs">
       <DependentUpon>WindowViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\DirectoryExtensions.cs" />
     <Compile Include="ThumbnailGrid\Model\ThumbnailModel.cs" />
     <Compile Include="MainWindow\InitialViewController.cs" />
     <Compile Include="MainWindow\InitialViewController.designer.cs">

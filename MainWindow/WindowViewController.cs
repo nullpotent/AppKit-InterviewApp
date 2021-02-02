@@ -75,14 +75,18 @@ namespace MacGallery.MainWindow
             childViewController.View.Frame = containerView.Bounds;
             containerView.AddSubview(childViewController.View);
 
-            var views = new NSMutableDictionary();
-            views.Add(new NSString("targetView"), childViewController.View);
-            horizontalConstraints = NSLayoutConstraint.FromVisualFormat("H:|[targetView]|", NSLayoutFormatOptions.None, null, views);
-            NSLayoutConstraint.ActivateConstraints(horizontalConstraints);
+            //var views = new NSMutableDictionary();
+            //views.Add(new NSString("targetView"), childViewController.View);
+            //horizontalConstraints = NSLayoutConstraint.FromVisualFormat("H:|[targetView]|", NSLayoutFormatOptions.None, null, views);
+            //NSLayoutConstraint.ActivateConstraints(horizontalConstraints);
 
-            verticalConstraints =
-                NSLayoutConstraint.FromVisualFormat("V:|[targetView]|", NSLayoutFormatOptions.None, null, views);
-            NSLayoutConstraint.ActivateConstraints(verticalConstraints);
+            //verticalConstraints =
+            //NSLayoutConstraint.FromVisualFormat("V:|[targetView]|", NSLayoutFormatOptions.None, null, views);
+            //NSLayoutConstraint.ActivateConstraints(verticalConstraints);
+            //childViewController.View.TopAnchor.ConstraintEqualToAnchor(containerView.TopAnchor).Active = true;
+            //childViewController.View.BottomAnchor.ConstraintEqualToAnchor(containerView.BottomAnchor).Active = true;
+            //childViewController.View.TopAnchor.ConstraintEqualToAnchor(containerView.TopAnchor).Active = true;
+            //childViewController.View.TopAnchor.ConstraintEqualToAnchor(containerView.TopAnchor).Active = true;
         }
 
         partial void BrowseToolbarAction(NSObject sender)
@@ -90,9 +94,15 @@ namespace MacGallery.MainWindow
             Debug.WriteLine(nameof(BrowseToolbarAction));
 
             var workingDir = PromptForWorkingDirectory();
-            iconViewController?.SetWorkingDirectoryUrl(workingDir);
-
-            EmbedChildViewController(iconViewController);
+            try
+            {
+                iconViewController?.SetWorkingDirectoryUrl(workingDir);
+                EmbedChildViewController(iconViewController);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         public static void SendShowProgress()

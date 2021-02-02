@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using AppKit;
 using CoreGraphics;
-using CoreServices;
 using Foundation;
 using ImageIO;
-using OpenTK;
 using QuickLook;
-using QuickLookThumbnailing;
 
 namespace MacGallery.Extensions
 {
     public static class NSUrlExtensions
     {
-        public static readonly string[] ImageFormats = new[] { "jpg", "jpeg", "png", "gif", "tiff" };
+        private static readonly string[] ImageFormats = new[] { "jpg", "jpeg", "png", "gif", "tiff" };
 
         public static bool IsFolder(this NSUrl url)
         {
@@ -44,17 +40,21 @@ namespace MacGallery.Extensions
             }
             else
             {
+                Debug.WriteLine(error);
                 // Can't find the type identifier, check further by extension.
                 return ImageFormats.Contains(url.PathExtension);
             }
         }
 
-        // Returns the type or UTI.
         public static string GetFileType(this NSUrl url)
         {
             if (url.TryGetResource(NSUrl.TypeIdentifierKey, out var fileTypeObj, out var error))
             {
                 return (NSString)fileTypeObj;
+            }
+            else
+            {
+                Debug.WriteLine(error);
             }
             return string.Empty;
         }
@@ -64,6 +64,10 @@ namespace MacGallery.Extensions
             if (url.TryGetResource(NSUrl.IsHiddenKey, out var isHiddenObj, out var error))
             {
                 return ((NSNumber)isHiddenObj).BoolValue;
+            }
+            else
+            {
+                Debug.WriteLine(error);
             }
             return false;
         }
@@ -76,7 +80,7 @@ namespace MacGallery.Extensions
             }
             else
             {
-                // Failed to get the localized name, use it's last path component as the name.
+                Debug.WriteLine(error);
                 return (NSString)url.LastPathComponent;
             }
         }
@@ -129,9 +133,7 @@ namespace MacGallery.Extensions
                 return effectiveIcon;
             }
 
-            //return null;
-
-            return ImageWithPreviewOfFileAtPath(url);
+            return null;
         }
     }
 }

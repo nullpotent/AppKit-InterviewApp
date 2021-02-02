@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Foundation;
-using AppKit;
 
 namespace MacGallery.ThumbnailGrid
 {
     public partial class ThumbnailItem : AppKit.NSView
     {
         #region Constructors
-
         // Called when created from unmanaged code
         public ThumbnailItem(IntPtr handle) : base(handle)
         {
@@ -27,7 +23,6 @@ namespace MacGallery.ThumbnailGrid
         void Initialize()
         {
         }
-
         #endregion
     }
 }
