@@ -53,9 +53,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
-    <Reference Include="Xamarin.Essentials">
-      <HintPath>..\packages\Xamarin.Essentials.1.6.1\lib\xamarinmac20\Xamarin.Essentials.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK" />
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
@@ -83,7 +80,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

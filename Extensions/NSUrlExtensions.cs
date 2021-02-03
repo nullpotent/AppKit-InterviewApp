@@ -115,15 +115,15 @@ namespace MacGallery.Extensions
             if (resources.TryGetValue(NSUrl.ThumbnailDictionaryKey, out var thumbnailObj) && thumbnailObj is NSDictionary thumbnailDict)
             {
                 return ImageWithPreviewOfFileAtPath(url);
-                thumbnailDict.TryGetValue((NSString)"NSThumbnail1024x1024SizeKey", out var val);
-                if (val is NSImage image)
-                {
-                    return image;
-                }
-                else
-                {
-                    return ImageWithPreviewOfFileAtPath(url);
-                }
+                //thumbnailDict.TryGetValue((NSString)"NSThumbnail1024x1024SizeKey", out var val);
+                //if (val is NSImage image)
+                //{
+                //    return image;
+                //}
+                //else
+                //{
+                //    return ImageWithPreviewOfFileAtPath(url);
+                //}
             }
             else if (resources.TryGetValue(NSUrl.CustomIconKey, out var customIconObj) && customIconObj is NSImage customIcon)
             {
