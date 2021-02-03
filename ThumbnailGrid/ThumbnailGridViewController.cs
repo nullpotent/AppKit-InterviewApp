@@ -55,7 +55,7 @@ namespace MacGallery.ThumbnailGrid
             {
                 try
                 {
-                    var contents = GatherContents(workingDirectoryUrl);
+                    var contents = ThumbnailStore.GetThumbnails(workingDirectoryUrl);
                     Source.Data.AddRange(contents);
                 }
                 catch (Exception ex)
@@ -78,7 +78,7 @@ namespace MacGallery.ThumbnailGrid
         private void CollectionItemViewDoubleClick(NSObject? sender)
 #pragma warning restore IDE0051 // Remove unused private members
         {
-            RaiseThumbnailDoubleClicked();
+            RaiseThumbnailDoubleClicked(sender as ThumbnailItemController);
         }
 
         #region Override Methods
@@ -96,8 +96,11 @@ namespace MacGallery.ThumbnailGrid
 
             var flowLayout = new NSCollectionViewFlowLayout()
             {
+                ItemSize = new CGSize(105, 60),
                 EstimatedItemSize = new CGSize(105, 60),
-                SectionInset = new NSEdgeInsets(10, 10, 10, 10),
+                MinimumInteritemSpacing = 6,
+                MinimumLineSpacing = 6,
+                SectionInset = new NSEdgeInsets(6, 6, 6, 6),
             };
 
             ThumbnailCollection.WantsLayer = true;
@@ -106,39 +109,16 @@ namespace MacGallery.ThumbnailGrid
             ThumbnailCollection.DataSource = Source;
         }
 
-        private List<ThumbnailModel> GatherContents(NSUrl url)
-        {
-            var contentArray = new List<ThumbnailModel>();
-            var files = NSFileManager.DefaultManager.GetDirectoryContent(url,
-                                                        NSArray.FromObjects(NSUrl.IsDirectoryKey, NSUrl.IsPackageKey, NSUrl.TypeIdentifierKey, NSUrl.LocalizedNameKey),
-                                                        NSDirectoryEnumerationOptions.SkipsHiddenFiles,
-                                                        out var error);
-            if (error != null)
-            {
-                Debug.WriteLine(error);
-                throw new NSErrorException(error);
-            }
-
-            foreach (var element in files)
-            {
-                var elementNameStr = element.GetLocalizedName();
-                var elementIcon = element.GetIcon();
-
-                contentArray.Add(new ThumbnailModel(elementNameStr, elementIcon));
-            }
-
-            return contentArray;
-        }
         #endregion
 
         #region Events
-        public delegate void OnThumbnailDoubleClick();
+        public delegate void OnThumbnailDoubleClick(ThumbnailModel? thumbnailModel);
 
         public event OnThumbnailDoubleClick? ThumbnailDoubleClicked;
 
-        internal void RaiseThumbnailDoubleClicked()
+        internal void RaiseThumbnailDoubleClicked(ThumbnailItemController? thumbnailItemController)
         {
-            ThumbnailDoubleClicked?.Invoke();
+            ThumbnailDoubleClicked?.Invoke(thumbnailItemController?.Thumbnail);
         }
         #endregion
 

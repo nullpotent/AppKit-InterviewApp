@@ -38,7 +38,7 @@
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JgN-t2-0c5">
                                 <rect key="frame" x="35" y="18" width="38" height="38"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="px4-LC-Slx"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSFolder" id="px4-LC-Slx"/>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="self.Thumbnail.Icon" id="aen-41-wft"/>
                                 </connections>
@@ -70,4 +70,7 @@
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="BML-aj-z5R"/>
     </objects>
+    <resources>
+        <image name="NSFolder" width="32" height="32"/>
+    </resources>
 </document>

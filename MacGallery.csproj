@@ -78,6 +78,7 @@
     <Folder Include="ThumbnailGrid\" />
     <Folder Include="MainWindow\" />
     <Folder Include="ThumbnailGrid\Model\" />
+    <Folder Include="ThumbnailViewer\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -115,6 +116,18 @@
     <Compile Include="ThumbnailGrid\ThumbnailGridViewController.cs" />
     <Compile Include="ThumbnailGrid\ThumbnailGridViewController.designer.cs">
       <DependentUpon>ThumbnailGridViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\NSStoryboardExtensions.cs" />
+    <Compile Include="ThumbnailStore.cs" />
+    <Compile Include="ThumbnailViewer\AspectFillImageView.cs" />
+    <Compile Include="ThumbnailViewer\FullScreenWindow.cs" />
+    <Compile Include="ThumbnailViewer\ImageViewController.cs" />
+    <Compile Include="ThumbnailViewer\ImageViewController.designer.cs">
+      <DependentUpon>ImageViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThumbnailViewer\ImageWindowController.cs" />
+    <Compile Include="ThumbnailViewer\ImageWindowController.designer.cs">
+      <DependentUpon>ImageWindowController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

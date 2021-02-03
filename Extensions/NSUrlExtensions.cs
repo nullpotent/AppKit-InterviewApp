@@ -114,6 +114,7 @@ namespace MacGallery.Extensions
 
             if (resources.TryGetValue(NSUrl.ThumbnailDictionaryKey, out var thumbnailObj) && thumbnailObj is NSDictionary thumbnailDict)
             {
+                return ImageWithPreviewOfFileAtPath(url);
                 thumbnailDict.TryGetValue((NSString)"NSThumbnail1024x1024SizeKey", out var val);
                 if (val is NSImage image)
                 {
